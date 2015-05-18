@@ -7,7 +7,7 @@ describe 'vtree-query', ->
   it 'queries vtree from zorium', ->
     tree = z 'div', 'test'
     $ = query(tree)
-    $('div').textContent.should.be 'test'
+    $('div').contents.should.be 'test'
 
   it 'deep queries using css selectors', ->
     tree =
@@ -22,13 +22,13 @@ describe 'vtree-query', ->
     $ = query(tree)
     $$ = query.all(tree)
 
-    $('div .class #id span').textContent.should.be 'abc'
-    $('div .class span').textContent.should.be 'abc'
-    $('div #id span').textContent.should.be 'abc'
-    $('.class #id span').textContent.should.be 'abc'
-    $('.class span').textContent.should.be 'abc'
-    $('#id span').textContent.should.be 'abc'
-    $('span').textContent.should.be 'abc'
+    $('div .class #id span').contents.should.be 'abc'
+    $('div .class span').contents.should.be 'abc'
+    $('div #id span').contents.should.be 'abc'
+    $('.class #id span').contents.should.be 'abc'
+    $('.class span').contents.should.be 'abc'
+    $('#id span').contents.should.be 'abc'
+    $('span').contents.should.be 'abc'
 
     $$('div .class #id span').length.should.be 2
     $$('div .class span').length.should.be 2
@@ -38,9 +38,9 @@ describe 'vtree-query', ->
     $$('#id span').length.should.be 2
     $$('span').length.should.be 2
 
-    $('div .class #id').textContent.should.be 'abcxyz'
-    $$('div .class #id span')[0].textContent.should.be 'abc'
-    $$('div .class #id span')[1].textContent.should.be 'xyz'
+    $('div .class #id').contents.should.be 'abcxyz'
+    $$('div .class #id span')[0].contents.should.be 'abc'
+    $$('div .class #id span')[1].contents.should.be 'xyz'
 
   it 'deep queries sub-components', ->
     class Wrapper
@@ -53,24 +53,24 @@ describe 'vtree-query', ->
       z $wrapper,
         $el: z '.sub', 'abc'
 
-    $('.top .sub').textContent.should.be 'abc'
+    $('.top .sub').contents.should.be 'abc'
 
   it 'queries by attribute', ->
     $ = query z 'div',
       z 'a', href: 'xyz', 'xxx'
       z 'a', href: 'abc', 'aaa'
 
-    $('a[href=xyz]').textContent.should.be 'xxx'
-    $('a[href=abc]').textContent.should.be 'aaa'
+    $('a[href=xyz]').contents.should.be 'xxx'
+    $('a[href=abc]').contents.should.be 'aaa'
 
   it 'passes props', ->
     $ = query z 'input', type: 'button'
-    $('input').properties.type.should.be 'button'
+    $('input').type.should.be 'button'
 
   it 'supports input value prop', ->
     $ = query z 'input', value: 'abc'
-    $('input').properties.value.should.be 'abc'
+    $('input').value.should.be 'abc'
 
   it 'passes attribues', ->
     $ = query z 'input', attributes: name: 'myname'
-    $('input[name=myname]').properties.attributes.name.should.be 'myname'
+    $('input[name=myname]').attributes.name.should.be 'myname'

@@ -7,14 +7,14 @@ language = cssauron(
   parent: 'parent'
   contents: 'contents'
   attr: (node, attr) ->
-    val = node.properties.attributes?[attr]
+    val = node.attributes?[attr]
     if val is undefined
-      return node.properties[attr]
+      return node[attr]
     return val
   class: (node) ->
-    node.properties.className
+    node.className
   id: (node) ->
-    node.properties.id
+    node.id
 )
 
 traverse = (vtree, fn) ->
@@ -39,7 +39,6 @@ mapTree = (vtree, parent) ->
   if vtree.type is 'VirtualText'
     return {
       contents: vtree.text
-      properties: {}
       parent: parent
       vtree: vtree
     }
@@ -51,13 +50,12 @@ mapTree = (vtree, parent) ->
   if isHook vtree.properties.value
     vtree.properties.value = vtree.properties.value.value
 
-  node =
+  node = _.defaults
     tagName: vtree.tagName
-    contents: ''
-    properties: vtree.properties or {}
+    contents: getTextContent vtree
     parent: parent
     vtree: vtree
-    textContent: getTextContent vtree
+  , vtree.properties
 
   node.children = _.map vtree.children, (child) ->
     mapTree child, node
