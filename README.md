@@ -1,5 +1,7 @@
 # vtree-query
 
+Testing utility for the [Zorium](https://zorium.org) framework
+
 ### Install
 
 ```bash
@@ -49,7 +51,7 @@ $('a[href=abc]').contents.should.be 'aaa'
 
 ## query(vtree, selector)
 
-Returns first matching vNode, with a `contents` property
+Returns first matching vNode, with a `contents` property that contains text info.  
 This method supports [currying](http://en.wikipedia.org/wiki/Currying)  
 
 ```coffee
@@ -60,7 +62,7 @@ $('div').contents.should.be 'test'
 
 ## query.all()
 
-Returns all matching vNodes, with `contents` properties
+Returns all matching vNodes, with `contents` properties that contain text info.  
 This method supports [currying](http://en.wikipedia.org/wiki/Currying)  
 
 ```coffee
